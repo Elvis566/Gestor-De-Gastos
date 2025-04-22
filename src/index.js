@@ -3,6 +3,9 @@ import cors from "cors"
 import bodyParser from "body-parser"
 import { sequelize } from "./DB/conexion.js"
 
+// Importaciones de rutas 
+import { RouterUser } from "./Router/UserRouter.js"
+
 
 
 const app = express()
@@ -15,7 +18,8 @@ app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
 
-// app.use(bodyParser)
+// manejo de rutas principales
+app.use("/user", RouterUser)
 
 const conexion = async() =>{
     try {

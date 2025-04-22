@@ -28,3 +28,21 @@ export const SaveUser = async(req, res)=>{
     }
 }
 
+export const getUser = async()=>{
+    try {
+        const ID = req.params
+
+        const USER = await UserModel.findByPk(ID)
+
+        if(!USER){
+            return res.status(401).json({message:"User is not found"})
+        }
+
+        return res.status(200).json({USER: USER})
+        
+    } catch (error) {
+        return res.status(500).json({Error: error})
+    }
+
+}
+
