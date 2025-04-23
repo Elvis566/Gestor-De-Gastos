@@ -18,9 +18,6 @@ export const ProyectoModel = sequelize.define("proyects", {
     descripcion: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-            len: [3, 255]
-        }
     },
     gastoTotal:{
         type: DataTypes.FLOAT,
