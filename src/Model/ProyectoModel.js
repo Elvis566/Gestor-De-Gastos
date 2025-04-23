@@ -10,31 +10,37 @@ export const ProyectoModel = sequelize.define("proyects", {
     },
     titulo: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            len: [3, 255]
+        }
     },
     descripcion: {
         type: DataTypes.STRING,
-        allowNull: false 
+        allowNull: false,
+        validate: {
+            len: [3, 255]
+        }
     },
     gastoTotal:{
-        type: DataTypes.NUMBER,
-        allowNull:false
+        type: DataTypes.FLOAT,
+        defaultValue: 0
     },
     gananciaTotal: {
-        type: DataTypes.NUMBER,
-        allowNull: false
+        type: DataTypes.FLOAT,
+        defaultValue: 0
     },
     estado: {
         type: DataTypes.BOOLEAN,
-        allowNull:false
+        defaultValue:true
     },
     fechaInicio: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull:false
     },
     fechaFinal: {
-        type: DataTypes.DATE,
-        allowNull:false
+        type: DataTypes.STRING,
+        defaultValue: "Aun esta en proceso el proyecto"
     },
 },{
     timestamps: false

@@ -5,6 +5,7 @@ import { sequelize } from "./DB/conexion.js"
 
 // Importaciones de rutas 
 import { RouterUser } from "./Router/UserRouter.js"
+import { RouterFoto } from "./Router/FotoRouter.js"
 
 
 
@@ -20,6 +21,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 // manejo de rutas principales
 app.use("/user", RouterUser)
+app.use("/foto", RouterFoto)
 
 const conexion = async() =>{
     try {
