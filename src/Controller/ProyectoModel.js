@@ -1,6 +1,6 @@
 import { ProyectoModel } from "../Model/ProyectoModel.js" 
 
-export const saveProyect = async(req, res)=>{
+export const saveProject = async(req, res)=>{
     try {
 
         const FECHA = new Date();
@@ -27,6 +27,23 @@ export const saveProyect = async(req, res)=>{
         })
 
         return res.status(200).json({PROJECT: PROJECT})
+
+    } catch (error) {
+        return res.status(500).json({Error: error})
+    }
+}
+
+export const getProject = async(req, res)=>{
+    try {
+        const ID = req.params.id
+
+        const PROJECT = await ProyectoModel.findByPk(ID)
+
+        if(!PROJECT){
+            return res.status(404).json({message: "no hay proyecto disponible"})
+        }
+
+        return res.status(200).json({PROJECT: PROJECT, message: "Proyecto encontrado"})
 
     } catch (error) {
         return res.status(500).json({Error: error})
