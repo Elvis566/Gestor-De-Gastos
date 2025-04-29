@@ -49,3 +49,19 @@ export const getProject = async(req, res)=>{
         return res.status(500).json({Error: error})
     }
 }
+
+export const getProjects = async(req, res)=>{
+    try {
+
+        const PROJECTS = await ProyectoModel.findAll()
+
+        if(!PROJECTS){
+            return res.status(404).json({message: "no hay proyectos disponibles"})
+        }
+
+        return res.status(200).json({PROJECTS: PROJECTS, message: "Proyectos encontrados"})
+
+    } catch (error) {
+        return res.status(500).json({Error: error})
+    }
+}
