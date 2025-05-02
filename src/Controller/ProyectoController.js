@@ -53,7 +53,9 @@ export const getProject = async(req, res)=>{
 export const getProjects = async(req, res)=>{
     try {
 
-        const PROJECTS = await ProyectoModel.findAll()
+        const ID = req.params.id
+
+        const PROJECTS = await ProyectoModel.findAll({where:{userId: ID}})
 
         if(!PROJECTS){
             return res.status(404).json({message: "no hay proyectos disponibles"})
@@ -65,3 +67,48 @@ export const getProjects = async(req, res)=>{
         return res.status(500).json({Error: error})
     }
 }
+
+export const deleteProject = async(req, res)=>{
+    try {
+
+        const ID = req.params.id
+
+        const PROYECT = await ProyectoModel.findByPk(ID);
+
+        if(!PROYECT){
+            return res.status(404).json({message: "Project no found"})
+        }
+
+        PROYECT.set({estado: false})
+        PROYECT.save();
+
+        return res.status(200).json({PROYECT: PROYECT, message : "Proyecto eliminado"})
+
+    } catch (error) {
+        return res.status.json({Error: error})
+    }
+}
+
+export const updateProject = async(req, res)=>{
+    try {
+        const ID = req.params.id
+
+        const {titulo, descripcion} = req.body
+
+        const PROJECT = await ProyectoModel.findByPk(ID)
+
+        if(!PROJECT){
+            return res.status(404).json({message: "Not found project"})
+        }
+
+        PROJECT.set({titulo: titulo, descripcion:descripcion })
+        PROJECT.save()
+
+        return res.status(200).json({PROJECT:PROJECT, message: "Proyecto actualizado"})
+
+    } catch (error) {
+        return res.status(500).json({Error: error})
+    }
+}
+
+
