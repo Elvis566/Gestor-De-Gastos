@@ -111,4 +111,29 @@ export const updateProject = async(req, res)=>{
     }
 }
 
+export const ingresos = async(req, res)=>{
+    try {
+        const ID = req.params.id
+
+        let {gasto, ganancia} = req.body
+
+        if(!gasto)gasto=0
+        if(!ganancia)ganancia=0
+
+        const PROJECTG = await ProyectoModel.findByPk(ID)
+
+        if(!PROJECTG){
+            return res.status(404).json({message: "No se encuentra el proyecto"})
+        }
+
+        PROJECTG.set({gastoTotal : gastoTotal + gasto, gananciaTotal : gananciaTotal + ganancia})
+        PROJECTG.save
+
+        return res.status(200).json({PROJECTG: PROJECTG, message: "Ingresos guardados"})
+
+    } catch (error) {
+        return res.status(500).json({Error:error})
+    }
+}
+
 
