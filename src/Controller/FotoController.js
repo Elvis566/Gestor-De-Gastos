@@ -1,17 +1,18 @@
 import { FotoModel } from "../Model/FotosModel.js";
 
 export const saveFoto = async(req, res)=>{
-    const name = req.body.name
+    const {targetId, targetType} = req.body.name
     const url = `../images/${req.file.filename}`
 
     try {
-        if(!name){
+        if(!targetId || !targetType){
             return res.status(401).json({massage:"not input invalid"})
         }
 
         const FOTO = await FotoModel.create({
-            name: name,
-            url: url
+            url: url,
+            targetId:targetId,
+            targetType: targetType
         });
 
         return res.status(201).json({FOTO: FOTO, message: "create succesfull"})

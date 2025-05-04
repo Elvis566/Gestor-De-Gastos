@@ -2,6 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../DB/conexion.js";
 import { UserModel } from "./UserModel.js";
 
+
 export const ProyectoModel = sequelize.define("proyects", {
     id: {
         type: DataTypes.INTEGER,
@@ -45,3 +46,6 @@ export const ProyectoModel = sequelize.define("proyects", {
 
 UserModel.hasMany(ProyectoModel,{as: "enlaceP", foreignKey:"userId"})
 ProyectoModel.belongsTo(UserModel,{as: "enlaceP", foreignKey:"userId"})
+
+
+

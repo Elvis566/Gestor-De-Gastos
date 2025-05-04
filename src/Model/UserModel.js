@@ -1,6 +1,6 @@
-import {DataTypes, INTEGER} from "sequelize"
+import {DataTypes} from "sequelize"
 import {sequelize} from "../DB/conexion.js"
-import { FotoModel } from "../Model/FotosModel.js"
+
 
 export const UserModel = sequelize.define("users", {
     id: {
@@ -23,6 +23,3 @@ export const UserModel = sequelize.define("users", {
 },{
     timestamps: false
 })
-
-FotoModel.hasMany(UserModel, {as:"enlaceF", foreignKey:"fotoId"})
-UserModel.belongsTo(FotoModel, {as:"enlaceF", foreignKey:"fotoId"})
