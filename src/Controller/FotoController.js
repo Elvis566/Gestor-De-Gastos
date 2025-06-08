@@ -1,8 +1,8 @@
 import { FotoModel } from "../Model/FotosModel.js";
 
 export const saveFoto = async(req, res)=>{
-    const {targetId, targetType} = req.body.name
-    const url = `../images/${req.file.filename}`
+    const {targetId, targetType} = req.body
+    const url = `./src/images/${req.file.filename}`
 
     try {
         if(!targetId || !targetType){

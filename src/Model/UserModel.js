@@ -2,6 +2,7 @@ import {DataTypes} from "sequelize"
 import {sequelize} from "../DB/conexion.js"
 
 
+
 export const UserModel = sequelize.define("users", {
     id: {
         type: DataTypes.INTEGER,
@@ -23,3 +24,5 @@ export const UserModel = sequelize.define("users", {
 },{
     timestamps: false
 })
+
+
