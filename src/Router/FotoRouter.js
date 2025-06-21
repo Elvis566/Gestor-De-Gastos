@@ -2,7 +2,7 @@ import { Router } from "express";
 import multer from "multer"
 import path from "path"
 
-import {saveFoto} from "../Controller/FotoController.js"
+import {saveFoto, getFotos} from "../Controller/FotoController.js"
 
 const router = Router()
 const __dirname = path.resolve()
@@ -19,6 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer ({storage: storage})
 
 router.post("/create", upload.single("avatar"), saveFoto)
+router.get("/traer/:id", getFotos)
 
 
 export const RouterFoto = router

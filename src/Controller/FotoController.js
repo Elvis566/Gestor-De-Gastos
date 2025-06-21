@@ -20,3 +20,20 @@ export const saveFoto = async(req, res)=>{
         return res.status(500).json({Error:error})
     }
 }
+
+export const getFotos = async(req, res)=>{
+
+    const ID = req.params.id
+    try {
+        const FOTOS = await FotoModel.findAll({where:{targetId:ID, targetType:"proyecto"}})
+
+        if(!FOTOS){
+            return res.status(401).json({message:"No hay imagenes disponibles"})
+        }
+
+        return res.status(201).json({FOTOS:FOTOS, message:"Fotos imagenes encontradas correctamente"})
+        
+    } catch (error) {
+        return res.status(500).json({Error:error})
+    }
+}

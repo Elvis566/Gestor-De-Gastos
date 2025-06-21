@@ -1,5 +1,5 @@
 import { ProyectoModel } from "../Model/ProyectoModel.js" 
-
+import { FotoModel } from "../Model/FotosModel.js"
 export const saveProject = async(req, res)=>{
     try {
 
@@ -58,11 +58,31 @@ export const getProjects = async(req, res)=>{
 
         const PROJECTS = await ProyectoModel.findAll({where:{userId: ID}})
 
+        // const FOTOS = await FotoModel.findAll({where:{targetId: PROJECTS.id, targetType: "proyecto"}})
+
         if(!PROJECTS){
             return res.status(404).json({message: "no hay proyectos disponibles"})
         }
 
-        return res.status(200).json({PROJECTS: PROJECTS, message: "Proyectos encontrados"})
+        const results = await Promise.all(PROJECTS.map(async (project) => {
+        const foto = await FotoModel.findOne({
+            where: {
+            targetId: project.id,
+            targetType: "proyecto"
+            }
+        });
+
+        const parrafo = project.descripcion
+        const primeras10 = parrafo.split(" ").slice(0, 10).join(" ");
+
+        return {
+            ...project.dataValues,
+            shortText: primeras10 + "...",
+            foto: foto ? foto.url : null
+        };
+        }));
+
+        return res.status(200).json({ PROJECTS: results, message: "Proyectos encontrados" });
 
     } catch (error) {
         return res.status(500).json({Error: error})
@@ -134,6 +154,25 @@ export const ingresos = async(req, res)=>{
 
     } catch (error) {
         return res.status(500).json({Error:error})
+    }
+}
+
+export const terminarProject = async(req, res)=>{
+    const ID = req.params.id;
+
+    try {
+        const PROJECT = await ProyectoModel.findByPk(ID)
+
+        if(!PROJECT){
+            return res.status(401).json({message: "No se puede encontrar el proyecto"})
+        }
+
+        PROJECT.set({estado: false})
+        PROJECT.save()
+
+        return res.status(200).json({PROJECT:PROJECT, message:"Proyecto terminado correctamente"})
+    } catch (error) {
+        return res.status(500).json({error:error})
     }
 }
 

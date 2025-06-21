@@ -1,5 +1,8 @@
 import {DataTypes, INTEGER} from "sequelize"
 import {sequelize} from "../DB/conexion.js"
+import {ProyectoModel} from "../Model/ProyectoModel.js"
+import {UserModel} from "../Model/UserModel.js"
+
 
 export const FotoModel = sequelize.define("fotos", {
     id: {
@@ -23,3 +26,5 @@ export const FotoModel = sequelize.define("fotos", {
 },{
     timestamps: false
 })
+
+
