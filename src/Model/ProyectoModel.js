@@ -32,6 +32,12 @@ export const ProyectoModel = sequelize.define("proyects", {
         type: DataTypes.BOOLEAN,
         defaultValue:true
     },
+
+    finalizacio: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
+    },
+    
     fechaInicio: {
         type: DataTypes.STRING,
         allowNull:false
