@@ -26,7 +26,7 @@ app.use("/project", RouterProject)
 const conexion = async() =>{
     try {
         await sequelize.authenticate()
-        await sequelize.sync({force: true})
+        await sequelize.sync({force: false})
         console.log("Conneccion has been established successfully");
         app.listen(PORT,()=>{
             console.log("Server is running");

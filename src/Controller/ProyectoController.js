@@ -176,4 +176,23 @@ export const terminarProject = async(req, res)=>{
     }
 }
 
+export const deletProject = async(req, res)=>{
+    const ID = req.params.id;
+
+    try {
+        const PROJECT = await ProyectoModel.findByPk(ID)
+
+        if(!PROJECT){
+            return res.status(401).json({message: "No se puede encontrar el proyecto"})
+        }
+
+        PROJECT.set({finalizacio: false})
+        PROJECT.save()
+
+        return res.status(200).json({PROJECT:PROJECT, message:"Proyecto terminado correctamente"})
+    } catch (error) {
+        return res.status(500).json({error:error})
+    }
+}
+
 
