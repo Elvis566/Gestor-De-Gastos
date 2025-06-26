@@ -73,7 +73,7 @@ export const getProjects = async(req, res)=>{
         });
 
         const parrafo = project.descripcion
-        const primeras10 = parrafo.split(" ").slice(0, 10).join(" ");
+        const primeras10 = parrafo.split(" ").slice(0, 15).join(" ");
 
         return {
             ...project.dataValues,
@@ -86,27 +86,6 @@ export const getProjects = async(req, res)=>{
 
     } catch (error) {
         return res.status(500).json({Error: error})
-    }
-}
-
-export const deleteProject = async(req, res)=>{
-    try {
-
-        const ID = req.params.id
-
-        const PROYECT = await ProyectoModel.findByPk(ID);
-
-        if(!PROYECT){
-            return res.status(404).json({message: "Project no found"})
-        }
-
-        PROYECT.set({estado: false})
-        PROYECT.save();
-
-        return res.status(200).json({PROYECT: PROYECT, message : "Proyecto eliminado"})
-
-    } catch (error) {
-        return res.status.json({Error: error})
     }
 }
 
@@ -159,6 +138,8 @@ export const ingresos = async(req, res)=>{
 
 export const terminarProject = async(req, res)=>{
     const ID = req.params.id;
+    const ESTADO = req.body.estado
+
 
     try {
         const PROJECT = await ProyectoModel.findByPk(ID)
@@ -167,8 +148,14 @@ export const terminarProject = async(req, res)=>{
             return res.status(401).json({message: "No se puede encontrar el proyecto"})
         }
 
-        PROJECT.set({estado: false})
+        if(ESTADO){
+            PROJECT.set({estado: false})
+        }else{
+            PROJECT.set({estado: true})
+        }
+
         PROJECT.save()
+
 
         return res.status(200).json({PROJECT:PROJECT, message:"Proyecto terminado correctamente"})
     } catch (error) {
@@ -176,7 +163,7 @@ export const terminarProject = async(req, res)=>{
     }
 }
 
-export const deletProject = async(req, res)=>{
+export const deleteProject = async(req, res)=>{
     const ID = req.params.id;
 
     try {
