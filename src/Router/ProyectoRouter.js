@@ -1,5 +1,5 @@
 import {Router} from "express"
-import { saveProject, getProject, getProjects, deleteProject, updateProject, ingresos,terminarProject} from "../Controller/ProyectoController.js"
+import { saveProject, getProject, getProjects, deleteProject, updateProject, ingresos,terminarProject, lenghtProjectAll} from "../Controller/ProyectoController.js"
 
 const router = Router()
 
@@ -10,7 +10,7 @@ router.put("/registro-ingresos", ingresos)
 router.delete("/project-delete/:id", deleteProject)
 router.put("/project-update/:id", updateProject)
 router.put("/project-stop/:id", terminarProject)
-
+router.get("/counter-project", lenghtProjectAll)
 
 
 

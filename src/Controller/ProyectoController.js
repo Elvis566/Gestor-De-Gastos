@@ -1,5 +1,6 @@
 import { ProyectoModel } from "../Model/ProyectoModel.js" 
 import { FotoModel } from "../Model/FotosModel.js"
+
 export const saveProject = async(req, res)=>{
     try {
 
@@ -56,7 +57,7 @@ export const getProjects = async(req, res)=>{
 
         const ID = req.params.id
 
-        const PROJECTS = await ProyectoModel.findAll({where:{userId: ID}})
+        const PROJECTS = await ProyectoModel.findAll({where:{userId: ID, finalizacio: true}})
 
         // const FOTOS = await FotoModel.findAll({where:{targetId: PROJECTS.id, targetType: "proyecto"}})
 
@@ -176,7 +177,23 @@ export const deleteProject = async(req, res)=>{
         PROJECT.set({finalizacio: false})
         PROJECT.save()
 
-        return res.status(200).json({PROJECT:PROJECT, message:"Proyecto terminado correctamente"})
+        return res.status(200).json({PROJECT:PROJECT, message:"Proyecto eliminado correctamente"})
+    } catch (error) {
+        return res.status(500).json({error:error})
+    }
+}
+
+export const lenghtProjectAll = async(req, res)=>{
+    try {
+        const projectAll = await ProyectoModel.findAll()
+
+        if(!projectAll){
+            return res.status(401).json({message: "No exite ningun proyecto proyecto"})
+        }
+
+        const projectNumberAll = projectAll.length
+
+        return res.status(200).json({countProject: projectNumberAll})
     } catch (error) {
         return res.status(500).json({error:error})
     }
